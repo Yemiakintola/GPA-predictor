@@ -7,11 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1sO1W4scKGn8r5Z8ZPbLGnwuA-xAmROBL
 """
 
-pip install streamlit
-
-import streamlit as st
-import joblib
-
 model = joblib.load('student_performance_predictor.pkl')
 
 st.title("Student Performance Predictor")
