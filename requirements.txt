@@ -4,7 +4,7 @@ pandas
 numpy
 joblib
 matplotlib.pyplot
-seaborn as sns
+seaborn 
 sklearn StandardScaler
 OneHotEncoder
 LabelEncoder
