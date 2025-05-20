@@ -1,0 +1,10 @@
+streamlit
+scikit-learn
+pandas
+numpy
+joblib
+matplotlib.pyplot
+seaborn as sns
+sklearn StandardScaler
+OneHotEncoder
+LabelEncoder
