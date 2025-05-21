@@ -3,7 +3,7 @@ import numpy as np
 import joblib
 
 # Load pipeline
-pipeline = joblib.load("student_performance_pipeline.pkl")
+pipeline = joblib.load("best_student_performance_pipeline.pkl")
 
 st.title("Student Performance Predictor")
 
