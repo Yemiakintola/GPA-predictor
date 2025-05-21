@@ -1,38 +1,39 @@
 import streamlit as st
-import joblib
 import numpy as np
+import joblib
 
-# Load the trained model
-model = joblib.load('student_performance_predictor.pkl')
+# Load pipeline
+pipeline = joblib.load("student_performance_pipeline.pkl")
 
-# Title of the app
 st.title("Student Performance Predictor")
 
-# User inputs
+# Input fields
 gender = st.selectbox("Gender", ["Male", "Female"])
-parent_education = st.selectbox("Parental Education Level", [
-    "None", "Primary", "Secondary", "Tertiary"
+ethnicity = st.selectbox("Ethnicity", ["Group A", "Group B", "Group C", "Group D", "Group E"])
+parent_edu = st.selectbox("Parental Education", ["None", "Primary", "Secondary", "Tertiary"])
+tutoring = st.selectbox("Tutoring", ["Yes", "No"])
+support = st.selectbox("Parental Support", ["Yes", "No"])
+extra = st.selectbox("Extracurricular", ["Yes", "No"])
+sports = st.selectbox("Sports", ["Yes", "No"])
+music = st.selectbox("Music", ["Yes", "No"])
+volunteer = st.selectbox("Volunteering", ["Yes", "No"])
+grade_class = st.selectbox("Grade Class", ["A", "B", "C", "D", "F"])
+
+age = st.slider("Age", 10, 25)
+study = st.slider("Study Time per Week (hours)", 0, 40)
+absences = st.slider("Absences", 0, 100)
+
+# Make prediction
+input_data = pd.DataFrame([[
+    gender, tutoring, support, extra, sports, music, volunteer,
+    ethnicity, parent_edu, grade_class,
+    age, study, absences
+]], columns=[
+    'Gender', 'Tutoring', 'ParentalSupport', 'Extracurricular', 'Sports', 'Music', 'Volunteering',
+    'Ethnicity', 'ParentalEducation', 'GradeClass',
+    'Age', 'StudyTimeWeekly', 'Absences'
 ])
-study_time = st.slider("Study Time (hours per day)", 0, 10)
-absences = st.slider("Number of Absences", 0, 100)
-internet = st.selectbox("Internet Access at Home", ["Yes", "No"])
 
-# Encoding categorical variables (same as training)
-gender_encoded = 1 if gender == "Male" else 0
-internet_encoded = 1 if internet == "Yes" else 0
-
-education_map = {
-    "None": 0,
-    "Primary": 1,
-    "Secondary": 2,
-    "Tertiary": 3
-}
-parent_education_encoded = education_map[parent_education]
-
-# Prepare input data
-input_data = np.array([[gender_encoded, parent_education_encoded, study_time, absences, internet_encoded]])
-
-# Predict button
 if st.button("Predict"):
-    prediction = model.predict(input_data)
-    st.success(f"Predicted Performance: {prediction[0]:.2f}")
+    prediction = pipeline.predict(input_data)
+    st.success(f"Predicted GPA: {prediction[0]:.2f}")
